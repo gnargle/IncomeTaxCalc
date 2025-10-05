@@ -1,3 +1,4 @@
+using IncomeTaxCalc.Database.Models;
 using IncomeTaxCalc.DTOs;
 using IncomeTaxCalc.Services.Interfaces;
 using IncomeTaxCalc.Services.TaxCalculators;
@@ -37,7 +38,7 @@ namespace IncomeTaxCalc.Services.Tests
             //Setup
             var request = new TaxCalcRequestDto()
             {
-                RegionId = 1,
+                RegionId = RegionDtoEnum.UnitedKingdom,
                 GrossAnnual = grossAnnual
             };
 
@@ -60,7 +61,7 @@ namespace IncomeTaxCalc.Services.Tests
             //Setup
             var request = new TaxCalcRequestDto()
             {
-                RegionId = 1,
+                RegionId = RegionDtoEnum.UnitedKingdom,
                 GrossAnnual = -1
             };
 

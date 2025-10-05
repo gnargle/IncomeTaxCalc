@@ -12,14 +12,14 @@ namespace IncomeTaxCalc.Services
     public class TaxCalculatorServiceFactory : ITaxCalculatorServiceFactory
     {
         private readonly IRegionService _regionService;
-        private Dictionary<RegionDtoEnum, BaseTaxCalculatorService> _calculatorServiceDictionary;
+        private Dictionary<RegionDtoEnum, BaseRegionTaxCalculatorService> _calculatorServiceDictionary;
         public TaxCalculatorServiceFactory(IRegionService regionService)
         {
             _regionService = regionService;
-            _calculatorServiceDictionary = new Dictionary<RegionDtoEnum, BaseTaxCalculatorService>();
+            _calculatorServiceDictionary = new Dictionary<RegionDtoEnum, BaseRegionTaxCalculatorService>();
         }
 
-        public BaseTaxCalculatorService GetTaxCalculatorService(RegionDtoEnum region)
+        public BaseRegionTaxCalculatorService GetTaxCalculatorService(RegionDtoEnum region)
         {
             if (_calculatorServiceDictionary.TryGetValue(region, out var result))
                 return result;

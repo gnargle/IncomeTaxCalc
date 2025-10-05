@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace IncomeTaxCalc.Services.TaxCalculators
 {
-    public class UKTaxCalculatorService : BaseTaxCalculatorService
+    public class UKTaxCalculatorService : BaseRegionTaxCalculatorService
     {
         public UKTaxCalculatorService(IRegionService regionService) : base(regionService, RegionDtoEnum.UnitedKingdom)
         {
@@ -46,12 +46,12 @@ namespace IncomeTaxCalc.Services.TaxCalculators
 
             return new TaxCalcResultDto()
             {
-                GrossAnnual = grossAnnual,
-                GrossMonthly = grossAnnual / 12M,
-                NetAnnual = grossAnnual - taxPayableTotal,
-                NetMonthly = (grossAnnual - taxPayableTotal) / 12M,
-                AnnualTaxPaid = taxPayableTotal,
-                MonthlyTaxPaid = taxPayableTotal / 12M
+                GrossAnnual = Math.Round(grossAnnual, 2),
+                GrossMonthly = Math.Round(grossAnnual / 12M, 2),
+                NetAnnual = Math.Round(grossAnnual - taxPayableTotal, 2),
+                NetMonthly = Math.Round((grossAnnual - taxPayableTotal) / 12M, 2),
+                AnnualTaxPaid = Math.Round(taxPayableTotal, 2),
+                MonthlyTaxPaid = Math.Round(taxPayableTotal / 12M, 2)
             };
         }
     }

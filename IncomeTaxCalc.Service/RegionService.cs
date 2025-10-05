@@ -34,19 +34,24 @@ namespace IncomeTaxCalc.Services
 
         private RegionDto MapModel(Region regionModel)
         {
-            return new RegionDto()
+            var dto = new RegionDto()
             {
                 RegionId = regionModel.RegionId,
                 RegionName = regionModel.RegionName,
-                TaxBands = regionModel.TaxBands.Select(t => new TaxBandDto()
+            };
+
+            if (regionModel.TaxBands != null)
+            {
+                dto.TaxBands = regionModel.TaxBands.Select(t => new TaxBandDto()
                 {
                     TaxBandId = t.TaxBandId,
                     RegionId = t.RegionId,
                     LowerBound = t.LowerBound,
                     UpperBound = t.UpperBound,
                     TaxRate = t.TaxRate,
-                }).ToList()
-            };
+                }).ToList();
+            }
+            return dto;
         }
     }
 }

@@ -12,23 +12,28 @@ namespace IncomeTaxCalc.Database.Repositories
 {
     public sealed class RegionRepository : IRegionRepository
     {
-        private readonly TaxCalcContext _context;
+        private readonly IServiceScopeFactory _scopeFactory;
         public RegionRepository(IServiceScopeFactory scopeFactory)
         {
-            using (var scope = scopeFactory.CreateScope())
-            {
-                _context = scope.ServiceProvider.GetRequiredService<TaxCalcContext>();
-            }
+            _scopeFactory = scopeFactory;
         }
 
         public async Task<Region> GetRegionAsync(int regionId, CancellationToken cancellationToken = default)
         {
-            return await _context.Regions.FirstOrDefaultAsync(r => r.RegionId == regionId, cancellationToken);
+            using (var scope = _scopeFactory.CreateScope())
+            {
+                var context = scope.ServiceProvider.GetRequiredService<TaxCalcContext>();
+                return await context.Regions.Include(r => r.TaxBands).FirstOrDefaultAsync(r => r.RegionId == regionId, cancellationToken);
+            }
         }
 
         public async Task<IEnumerable<Region>> GetRegionsAsync(CancellationToken cancellationToken = default)
         {
-            return await _context.Regions.ToListAsync(cancellationToken);
+            using (var scope = _scopeFactory.CreateScope())
+            {
+                var context = scope.ServiceProvider.GetRequiredService<TaxCalcContext>();
+                return await context.Regions.ToListAsync(cancellationToken);
+            }
         }
     }
 }

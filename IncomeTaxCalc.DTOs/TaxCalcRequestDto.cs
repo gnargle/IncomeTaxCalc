@@ -8,7 +8,7 @@ namespace IncomeTaxCalc.DTOs
 {
     public class TaxCalcRequestDto
     {
-        public int RegionId { get; set; }
+        public RegionDtoEnum RegionId { get; set; }
         public decimal GrossAnnual { get; set; }
     }
 }

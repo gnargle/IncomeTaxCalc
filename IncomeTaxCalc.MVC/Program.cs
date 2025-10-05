@@ -20,6 +20,7 @@ builder.Services.AddSingleton<IRegionService, RegionService>();
 builder.Services.AddSingleton<ITaxCalculatorServiceFactory, TaxCalculatorServiceFactory>();
 builder.Services.AddSingleton<ITaxBandRepository, TaxBandRepository>();
 builder.Services.AddSingleton<IRegionRepository, RegionRepository>();
+builder.Services.AddSingleton<ITaxCalculatorService, TaxCalculatorService>();
 
 var app = builder.Build();
 
@@ -53,6 +54,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=TaxCalc}/{action=Index}/{id?}");
 
 app.Run();

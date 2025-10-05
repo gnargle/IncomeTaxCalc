@@ -1,5 +1,4 @@
 ﻿using IncomeTaxCalc.DTOs;
-using IncomeTaxCalc.Services.TaxCalculators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace IncomeTaxCalc.Services.Interfaces
 {
-    public interface ITaxCalculatorServiceFactory
+    public interface ITaxCalculatorService
     {
-        public BaseRegionTaxCalculatorService GetTaxCalculatorService(RegionDtoEnum region);
+        public Task<TaxCalcResultDto> PerformTaxCalcAsync(TaxCalcRequestDto request, CancellationToken cancellationToken = default);
     }
 }

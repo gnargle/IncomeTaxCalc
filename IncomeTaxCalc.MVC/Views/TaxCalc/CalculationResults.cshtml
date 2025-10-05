@@ -1,0 +1,39 @@
+﻿@using IncomeTaxCalc.MVC.Models
+@model TaxCalcFormModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <div class="whole-page">
+        <partial name="_TaxCalcForm" model="Model"/>
+        <div class="results-container">
+            <table class="results-table">
+                <tr class="result-entry">
+                    <td class="result-entry"><label asp-for="@Model.GrossAnnual"></label></td>
+                    <td class="result-entry">@Model.GrossAnnual</td>
+                </tr>
+                <tr>
+                    <td class="result-entry"><label asp-for="@Model.GrossMonthly"></label></td>
+                    <td class="result-entry">@Model.GrossMonthly</td>
+                </tr>
+                <tr>
+                    <td class="result-entry"><label asp-for="@Model.NetAnnual"></label></td>
+                    <td class="result-entry">@Model.NetAnnual</td>
+                </tr>
+                <tr>
+                    <td class="result-entry"><label asp-for="@Model.NetMonthly"></label></td>
+                    <td class="result-entry">@Model.NetMonthly</td>
+                </tr>
+                <tr>
+                    <td class="result-entry"><label asp-for="@Model.AnnualTaxPaid"></label></td>
+                    <td class="result-entry">@Model.AnnualTaxPaid</td>
+                </tr>
+                <tr>
+                    <td class="result-entry"><label asp-for="@Model.MonthlyTaxPaid"></label></td>
+                    <td class="result-entry">@Model.MonthlyTaxPaid</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

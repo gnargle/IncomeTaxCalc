@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace IncomeTaxCalc.Services.TaxCalculators
 {
-    public abstract class BaseTaxCalculatorService
+    public abstract class BaseRegionTaxCalculatorService
     {
         protected readonly IRegionService _regionService;
         protected readonly RegionDtoEnum _regionEnum;
         protected RegionDto? Region { get; private set; }
-        public BaseTaxCalculatorService(IRegionService regionService, RegionDtoEnum regionEnum)
+        public BaseRegionTaxCalculatorService(IRegionService regionService, RegionDtoEnum regionEnum)
         {
             _regionService = regionService;
             _regionEnum = regionEnum;

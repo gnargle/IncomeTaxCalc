@@ -20,3 +20,45 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.result-entry {
+    padding: 5px;
+    text-align: center;
+    border: 1px solid black;
+}
+
+.results-container {
+    margin: 10px;
+    width: 800px;
+    padding: 10px;
+    display: inline-block;
+    border: 3px, solid, springgreen;
+    border-radius: 25px;
+    background: springgreen;
+}
+
+.results-table{
+    display:inline-table;
+    margin: 10px;
+}
+
+.form-container {
+    width: 800px;
+    padding: 10px;
+    display: inline-block;
+    border: 3px, solid, skyblue;
+    border-radius: 25px;
+    background: skyblue;
+}
+
+.form-border{
+
+}
+
+.form-input{
+    display: inline;
+    margin: 5px;
+}
+.whole-page{
+    padding-top: 20px;
+}
