@@ -33,6 +33,7 @@ namespace IncomeTaxCalc.Services.Tests
 
         [TestCase(40000, 29000)]
         [TestCase(19000, 16200)]
+        [TestCase(10000, 9000)]
         [TestCase(5000, 5000)]
         [TestCase(5010, 5008)]
         public async Task GrossAnnualValid_OK(decimal grossAnnual, decimal netAnnual)
