@@ -1,5 +1,6 @@
 ﻿using IncomeTaxCalc.DTOs;
 using IncomeTaxCalc.Services.Interfaces;
+using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,13 +11,13 @@ namespace IncomeTaxCalc.Services.TaxCalculators
 {
     public class UKTaxCalculatorService : BaseRegionTaxCalculatorService
     {
-        public UKTaxCalculatorService(IRegionService regionService) : base(regionService, RegionDtoEnum.UnitedKingdom)
+        public UKTaxCalculatorService(IRegionService regionService, IMemoryCache memoryCache) : base(regionService, RegionDtoEnum.UnitedKingdom, memoryCache)
         {
         }
         public async override Task<TaxCalcResultDto> CalculateTaxAsync(TaxCalcRequestDto request, CancellationToken cancellationToken = default)
         {
             var result = await base.CalculateTaxAsync(request, cancellationToken);
-            if (!string.IsNullOrWhiteSpace(result.Error))
+            if (!string.IsNullOrWhiteSpace(result.Error) || result.NetAnnual.HasValue)
             {
                 return result;
             }
@@ -44,7 +45,7 @@ namespace IncomeTaxCalc.Services.TaxCalculators
                 taxPayableTotal += bandTaxToPay;
             }
 
-            return new TaxCalcResultDto()
+            result = new TaxCalcResultDto()
             {
                 GrossAnnual = Math.Round(grossAnnual, 2),
                 GrossMonthly = Math.Round(grossAnnual / 12M, 2),
@@ -53,6 +54,9 @@ namespace IncomeTaxCalc.Services.TaxCalculators
                 AnnualTaxPaid = Math.Round(taxPayableTotal, 2),
                 MonthlyTaxPaid = Math.Round(taxPayableTotal / 12M, 2)
             };
+
+            StoreResultInCache(result);
+            return result;
         }
     }
 }

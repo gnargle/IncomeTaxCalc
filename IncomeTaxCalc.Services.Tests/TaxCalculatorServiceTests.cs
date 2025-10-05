@@ -1,6 +1,7 @@
 ﻿using IncomeTaxCalc.DTOs;
 using IncomeTaxCalc.Services.Interfaces;
 using IncomeTaxCalc.Services.TaxCalculators;
+using Microsoft.Extensions.Caching.Memory;
 using Moq;
 using Shouldly;
 using System;
@@ -19,7 +20,8 @@ namespace IncomeTaxCalc.Services.Tests
             //Setup
             var mockFactory = new Mock<ITaxCalculatorServiceFactory>();
             var mockRegionService = new Mock<IRegionService>();
-            var mockUKService = new Mock<UKTaxCalculatorService>(mockRegionService.Object);
+            var mockmemoryCache = new Mock<IMemoryCache>();
+            var mockUKService = new Mock<UKTaxCalculatorService>(mockRegionService.Object, mockmemoryCache.Object);
             mockFactory.Setup(x => x.GetTaxCalculatorService(DTOs.RegionDtoEnum.UnitedKingdom)).Returns(mockUKService.Object);
 
             var _taxCalculatorService = new TaxCalculatorService(mockFactory.Object);
@@ -57,7 +59,8 @@ namespace IncomeTaxCalc.Services.Tests
             //Setup
             var mockFactory = new Mock<ITaxCalculatorServiceFactory>();
             var mockRegionService = new Mock<IRegionService>();
-            var mockFranceService = new Mock<FranceTaxCalculatorService>(mockRegionService.Object);
+            var mockmemoryCache = new Mock<IMemoryCache>();
+            var mockFranceService = new Mock<FranceTaxCalculatorService>(mockRegionService.Object, mockmemoryCache.Object);
             mockFactory.Setup(x => x.GetTaxCalculatorService(DTOs.RegionDtoEnum.France)).Returns(mockFranceService.Object);
 
             var _taxCalculatorService = new TaxCalculatorService(mockFactory.Object);
@@ -95,7 +98,8 @@ namespace IncomeTaxCalc.Services.Tests
             //Setup
             var mockFactory = new Mock<ITaxCalculatorServiceFactory>();
             var mockRegionService = new Mock<IRegionService>();
-            var mockIrelandService = new Mock<IrelandTaxCalculatorService>(mockRegionService.Object);
+            var mockmemoryCache = new Mock<IMemoryCache>();
+            var mockIrelandService = new Mock<IrelandTaxCalculatorService>(mockRegionService.Object, mockmemoryCache.Object);
             mockFactory.Setup(x => x.GetTaxCalculatorService(DTOs.RegionDtoEnum.Ireland)).Returns(mockIrelandService.Object);
 
             var _taxCalculatorService = new TaxCalculatorService(mockFactory.Object);

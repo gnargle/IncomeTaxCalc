@@ -1,5 +1,6 @@
 ﻿using IncomeTaxCalc.DTOs;
 using IncomeTaxCalc.Services.Interfaces;
+using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace IncomeTaxCalc.Services.TaxCalculators
 {
     public class FranceTaxCalculatorService : BaseRegionTaxCalculatorService
     {
-        public FranceTaxCalculatorService(IRegionService regionService) : base(regionService, RegionDtoEnum.France)
+        public FranceTaxCalculatorService(IRegionService regionService, IMemoryCache memoryCache) : base(regionService, RegionDtoEnum.France, memoryCache)
         {
         }
 
@@ -20,7 +21,7 @@ namespace IncomeTaxCalc.Services.TaxCalculators
             //actual tax calculations are I'm sure different to the UK calculator but I don't think understanding foreign tax laws are
             //a part of this exercise, so this behaviour has been copied from the UK calc for simplicity/to demonstrate the multiple further tax
             //bands this solution can handle.
-            if (!string.IsNullOrWhiteSpace(result.Error))
+            if (!string.IsNullOrWhiteSpace(result.Error) || result.NetAnnual.HasValue)
             {
                 return result;
             }
@@ -49,7 +50,7 @@ namespace IncomeTaxCalc.Services.TaxCalculators
                 taxPayableTotal += bandTaxToPay;
             }
 
-            return new TaxCalcResultDto()
+            result = new TaxCalcResultDto()
             {
                 GrossAnnual = Math.Round(grossAnnual, 2),
                 GrossMonthly = Math.Round(grossAnnual / 12M, 2),
@@ -58,6 +59,9 @@ namespace IncomeTaxCalc.Services.TaxCalculators
                 AnnualTaxPaid = Math.Round(taxPayableTotal, 2),
                 MonthlyTaxPaid = Math.Round(taxPayableTotal / 12M, 2)
             };
+
+            StoreResultInCache(result);
+            return result;
         }
     }
 }

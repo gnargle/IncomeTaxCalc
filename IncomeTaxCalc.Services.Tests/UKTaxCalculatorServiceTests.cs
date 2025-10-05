@@ -2,6 +2,7 @@ using IncomeTaxCalc.Database.Models;
 using IncomeTaxCalc.DTOs;
 using IncomeTaxCalc.Services.Interfaces;
 using IncomeTaxCalc.Services.TaxCalculators;
+using Microsoft.Extensions.Caching.Memory;
 using Moq;
 using Shouldly;
 
@@ -26,7 +27,8 @@ namespace IncomeTaxCalc.Services.Tests
                 }
             };
             regionServiceMock.Setup(m => m.GetRegionAsync(RegionDtoEnum.UnitedKingdom, default)).Returns(Task.FromResult(region));
-            _uKTaxCalculatorService = new UKTaxCalculatorService(regionServiceMock.Object);
+            var memoryCacheMock = new NullMemoryCache();
+            _uKTaxCalculatorService = new UKTaxCalculatorService(regionServiceMock.Object, memoryCacheMock);
         }
 
         [TestCase(40000, 29000)]

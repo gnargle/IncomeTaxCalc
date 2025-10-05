@@ -1,6 +1,7 @@
 ﻿using IncomeTaxCalc.DTOs;
 using IncomeTaxCalc.Services.Interfaces;
 using IncomeTaxCalc.Services.TaxCalculators;
+using Microsoft.Extensions.Caching.Memory;
 using Moq;
 using Shouldly;
 using System;
@@ -18,7 +19,8 @@ namespace IncomeTaxCalc.Services.Tests
         public void Setup()
         {
             var regionServiceMock = new Mock<IRegionService>();
-            _taxCalculatorServiceFactory = new TaxCalculatorServiceFactory(regionServiceMock.Object);
+            var memoryCacheMock = new Mock<IMemoryCache>();
+            _taxCalculatorServiceFactory = new TaxCalculatorServiceFactory(regionServiceMock.Object, memoryCacheMock.Object);
         }
 
         [Test]
