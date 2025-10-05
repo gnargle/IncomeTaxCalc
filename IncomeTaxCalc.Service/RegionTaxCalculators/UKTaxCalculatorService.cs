@@ -24,7 +24,7 @@ namespace IncomeTaxCalc.Services.TaxCalculators
             decimal grossAnnual = request.GrossAnnual;
             decimal taxPayableTotal = 0;
 
-            foreach (var band in Region.TaxBands)
+            foreach (var band in Region!.TaxBands)
             {
                 if (grossAnnual < band.LowerBound)
                 {

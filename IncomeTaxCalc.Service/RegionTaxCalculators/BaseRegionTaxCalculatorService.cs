@@ -26,7 +26,7 @@ namespace IncomeTaxCalc.Services.TaxCalculators
         {            
             var error = CheckRequestDto(request);
             await FetchRegionAsync(cancellationToken);
-            if (error == null)
+            if (string.IsNullOrWhiteSpace(error))
             {
                 if (_memoryCache.TryGetValue($"result:{request.GrossAnnual}", out TaxCalcResultDto completeResult))
                 {
