@@ -19,8 +19,8 @@ namespace IncomeTaxCalc.Services.Tests
         public void Setup()
         {
             var regionServiceMock = new Mock<IRegionService>();
-            var memoryCacheMock = new Mock<IMemoryCache>();
-            _taxCalculatorServiceFactory = new TaxCalculatorServiceFactory(regionServiceMock.Object, memoryCacheMock.Object);
+            var memoryCacheMock = new NullMemoryCache();
+            _taxCalculatorServiceFactory = new TaxCalculatorServiceFactory(regionServiceMock.Object, memoryCacheMock);
         }
 
         [Test]

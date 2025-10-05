@@ -19,7 +19,6 @@ namespace IncomeTaxCalc.Services
         {
             _regionService = regionService;
             _memoryCache = memoryCache;
-            _calculatorServiceDictionary = new Dictionary<RegionDtoEnum, BaseRegionTaxCalculatorService>();
         }
 
         public BaseRegionTaxCalculatorService GetTaxCalculatorService(RegionDtoEnum region)
