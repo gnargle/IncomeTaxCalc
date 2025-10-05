@@ -10,8 +10,8 @@ namespace IncomeTaxCalc.Services.Tests
 {
     public sealed class NullMemoryCache : IMemoryCache
     {
-        //This stubs for IMemoryCache when doing unit tests.
-        //From this stack overflow answer: https://stackoverflow.com/questions/38318247/mock-imemorycache-in-unit-test
+        //This stubs for IMemoryCache when doing unit tests. Using Moq Mocks for it causes tests to fail because Set() is an extension method
+        //And can't be stubbed from a mock. From this stack overflow answer: https://stackoverflow.com/questions/38318247/mock-imemorycache-in-unit-test
         public ICacheEntry CreateEntry(object key)
         {
             return new NullCacheEntry() { Key = key };
