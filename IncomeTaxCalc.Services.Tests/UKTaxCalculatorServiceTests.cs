@@ -48,11 +48,11 @@ namespace IncomeTaxCalc.Services.Tests
             //Assert
             result.ShouldNotBeNull();
             result.GrossAnnual.ShouldBe(grossAnnual);
-            result.GrossMonthly.ShouldBe(grossAnnual / 12M);
-            result.NetAnnual.ShouldBe(netAnnual);
-            result.NetMonthly.ShouldBe(netAnnual / 12M);
-            result.AnnualTaxPaid.ShouldBe(grossAnnual - netAnnual);
-            result.MonthlyTaxPaid.ShouldBe((grossAnnual - netAnnual) / 12M);
+            result.GrossMonthly.ShouldBe(Math.Round(grossAnnual / 12M,2));
+            result.NetAnnual.ShouldBe(Math.Round(netAnnual,2));
+            result.NetMonthly.ShouldBe(Math.Round(netAnnual / 12M,2));
+            result.AnnualTaxPaid.ShouldBe(Math.Round(grossAnnual - netAnnual,2));
+            result.MonthlyTaxPaid.ShouldBe(Math.Round((grossAnnual - netAnnual) / 12M,2));
         }
 
         [Test]
